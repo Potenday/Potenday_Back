@@ -42,10 +42,6 @@ public class UserEntity extends DateTimeAuditing {
     @Builder.Default
     private Set<Role> roles = new LinkedHashSet<>();
 
-    @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private Set<UserPlantEntity> userPlants = new LinkedHashSet<>();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
