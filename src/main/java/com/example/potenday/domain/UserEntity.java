@@ -1,7 +1,7 @@
-package com.example.protenday.domain;
+package com.example.potenday.domain;
 
-import com.example.protenday.domain.constant.DateTimeAuditing;
-import com.example.protenday.domain.constant.Role;
+import com.example.potenday.domain.constant.DateTimeAuditing;
+import com.example.potenday.domain.constant.Role;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -26,7 +26,7 @@ public class UserEntity extends DateTimeAuditing {
     private Long id;
 
     /** 이메일 */
-    @Column(nullable = false, name = "email") private String email;
+    @Column(nullable = false, name = "email", unique = true) private String email;
 
     /** 비밀번호 */
     @Column(nullable = false, name = "password") private String password;
@@ -38,8 +38,7 @@ public class UserEntity extends DateTimeAuditing {
     @Column(name = "nickname", length = 100) private String nickname;
 
     /** 권한 */
-    @Column(name = "role") @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
+    @Builder.Default @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles = new LinkedHashSet<>();
 
     @Override
@@ -52,5 +51,9 @@ public class UserEntity extends DateTimeAuditing {
     @Override
     public int hashCode() {
         return Objects.hash(this.getId());
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
     }
 }

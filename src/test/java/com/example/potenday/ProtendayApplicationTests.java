@@ -1,4 +1,4 @@
-package com.example.protenday;
+package com.example.potenday;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.example.protenday.domain.constant;
+package com.example.potenday.domain.constant;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -17,14 +18,16 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class DateTimeAuditing {
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
-    @Column(name = "regitered_at", updatable = false)
+    @Column(name = "registered_at", updatable = false)
     public LocalDateTime registeredAt;
 
     @CreatedBy
     @Column(name = "registered_by", updatable = false)
     public String registeredBy;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
     @Column(name = "modified_at")
     public LocalDateTime modifiedAt;
