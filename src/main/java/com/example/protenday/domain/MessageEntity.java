@@ -1,5 +1,6 @@
 package com.example.protenday.domain;
 
+import com.example.protenday.domain.constant.DateTimeAuditing;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Table(name = "message")
 @SQLDelete(sql = "UPDATE message SET deleted_at = NOW() where id=?")
 @Where(clause = "deleted_at is NULL")
-public class MessageEntity {
+public class MessageEntity extends DateTimeAuditing {
 
     /** 인덱스 */
     @Id
