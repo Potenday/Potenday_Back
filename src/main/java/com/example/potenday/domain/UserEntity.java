@@ -25,6 +25,9 @@ public class UserEntity extends DateTimeAuditing {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /** UUID */
+    @Column(nullable = false, name = "uuid", unique = true) private Long uuid;
+
     /** 이메일 */
     @Column(nullable = false, name = "email", unique = true) private String email;
 
@@ -32,7 +35,7 @@ public class UserEntity extends DateTimeAuditing {
     @Column(nullable = false, name = "password") private String password;
 
     /** 이름 */
-    @Column(nullable = false, name = "fullname",length = 100) private String fullname;
+    @Column(name = "fullname",length = 100) private String fullname;
 
     /** 닉네임 */
     @Column(name = "nickname", length = 100) private String nickname;
@@ -40,6 +43,16 @@ public class UserEntity extends DateTimeAuditing {
     /** 권한 */
     @Builder.Default @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles = new LinkedHashSet<>();
+
+    @Builder
+    public UserEntity(Long uuid, String email, String password, String fullname, String nickname, Set<Role> roles) {
+        this.uuid = uuid;
+        this.email = email;
+        this.password = password;
+        this.fullname = fullname;
+        this.nickname = nickname;
+        this.roles = roles;
+    }
 
     @Override
     public boolean equals(Object o) {
