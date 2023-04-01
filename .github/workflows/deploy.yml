@@ -1,0 +1,46 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+          scope: potenday
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: potenday/potenday
+          stage: main
+          yaml: |
+            name: potenday-back
+            app: java@17
+            options:
+              env:
+                - name: KAKAO_CLIENT_SECRET
+                  secret : KAKAO_CLIENT_SECRET
+                - name: KAKAO_REDIRECT_URI
+                  secret : KAKAO_REDIRECT_URI
+                - name: KAKAO_REST_API_KEY
+                  secret : KAKAO_REST_API_KEY
+                - name: LOCAL_DB_PASSWORD
+                  secret : LOCAL_DB_PASSWORD
+                - name: LOCAL_DB_URL
+                  secret : LOCAL_DB_URL
+                - name: LOCAL_DB_USERNAME
+                  secret : LOCAL_DB_USERNAME
+              ports: 8080/http
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: java-springboot
