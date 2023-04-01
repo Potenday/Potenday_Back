@@ -1,6 +1,6 @@
-package com.example.protenday.repository;
+package com.example.potenday.repository;
 
-import com.example.protenday.domain.PlantEntity;
+import com.example.potenday.domain.PlantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PlantEntityRepository extends JpaRepository<PlantEntity, Long> {
