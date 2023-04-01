@@ -1,7 +1,7 @@
-package com.example.potenday.domain;
+package com.example.protenday.domain;
 
-import com.example.potenday.domain.constant.DateTimeAuditing;
-import com.example.potenday.dto.request.PlantRequest;
+import com.example.protenday.domain.constant.DateTimeAuditing;
+import com.example.protenday.dto.request.PlantRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +37,13 @@ public class PlantEntity extends DateTimeAuditing {
     /** 식물 설명 */
     @Column(name = "description") String description;
 
+    @OneToOne @JoinColumn(name = "image_id")
+    private ImageEntity imageEntity;
+
+    public void setImageEntity(ImageEntity imageEntity) {
+        imageEntity.setPlant(this);
+        this.imageEntity = imageEntity;
+    }
 
     @Override
     public boolean equals(Object o) {

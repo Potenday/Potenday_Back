@@ -1,14 +1,14 @@
-package com.example.potenday.domain;
+package com.example.protenday.domain;
 
-import com.example.potenday.domain.constant.DateTimeAuditing;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.protenday.domain.constant.DateTimeAuditing;
+import com.example.protenday.util.ImageUtils;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,7 +29,7 @@ public class ImageEntity extends DateTimeAuditing {
     @Column(name = "filename", columnDefinition = "TEXT")
     private String fileName;
 
-    @Lob @Basic(fetch = FetchType.LAZY)
+    @Setter @Lob @Basic(fetch = FetchType.LAZY)
     @Column(name = "imagedata", length = 16_000_000)
     private byte[] imageData;
 
@@ -39,5 +39,9 @@ public class ImageEntity extends DateTimeAuditing {
 
     public void updateImageSource(byte[] imageData) {
         this.imageData = imageData;
+    }
+
+    public void decompressImage() {
+        this.imageData = ImageUtils.decompressImage(this.imageData);
     }
 }

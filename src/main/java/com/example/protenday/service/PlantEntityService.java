@@ -1,8 +1,10 @@
-package com.example.potenday.service;
+package com.example.protenday.service;
 
-import com.example.potenday.domain.PlantEntity;
-import com.example.potenday.dto.request.PlantRequest;
-import com.example.potenday.repository.PlantEntityRepository;
+import com.example.protenday.domain.ImageEntity;
+import com.example.protenday.domain.PlantEntity;
+import com.example.protenday.dto.request.PlantRequest;
+import com.example.protenday.repository.ImageEntityRepository;
+import com.example.protenday.repository.PlantEntityRepository;
 import com.example.protenday.dto.Plant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class PlantEntityService {
 
     private final PlantEntityRepository plantEntityRepository;
+    private final ImageEntityRepository imageEntityRepository;
 
     /**
      * 식물 생성
@@ -33,11 +36,17 @@ public class PlantEntityService {
             return null;
         }
 
-        PlantEntity savedPlant = plantEntityRepository.save(PlantEntity.builder()
+        ImageEntity imageEntity = imageEntityRepository.findById(request.getImageId()).get();
+
+        PlantEntity plant = PlantEntity.builder()
                 .name(request.getName())
                 .attribute(request.getAttribute())
                 .description(request.getDescription())
-                .build());
+                .build();
+        
+        plant.setImageEntity(imageEntity);
+
+        PlantEntity savedPlant = plantEntityRepository.save(plant);
 
         return Plant.fromEntity(savedPlant);
     }
