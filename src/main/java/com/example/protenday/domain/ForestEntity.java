@@ -30,7 +30,7 @@ public class ForestEntity extends DateTimeAuditing {
 
     /** 전달받은 메시지 */
     @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<MessageEntity> messages = new LinkedHashSet<>();
 
     public void addMessage(MessageEntity message) {

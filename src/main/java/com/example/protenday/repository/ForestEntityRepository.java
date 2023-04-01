@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ForestEntityRepository extends JpaRepository<ForestEntity, Long> {
 
+    ForestEntity findByUserEntity_Id(Long id);
 }
