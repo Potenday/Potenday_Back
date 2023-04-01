@@ -1,10 +1,14 @@
 package com.example.potenday.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/trees")
-@Controller
 public class TreeController {
 
     @PostMapping
@@ -22,7 +26,7 @@ public class TreeController {
 
     }
 
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     public void requestRemoveTree(@PathVariable Long id) {
 
     }
