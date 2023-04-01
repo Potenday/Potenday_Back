@@ -1,6 +1,6 @@
-package com.example.protenday.domain;
+package com.example.potenday.domain;
 
-import com.example.protenday.domain.constant.DateTimeAuditing;
+import com.example.potenday.domain.constant.DateTimeAuditing;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -29,6 +29,7 @@ public class ForestEntity extends DateTimeAuditing {
     private UserEntity userEntity;
 
     /** 전달받은 메시지 */
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<MessageEntity> messages = new LinkedHashSet<>();
 

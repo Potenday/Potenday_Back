@@ -1,4 +1,4 @@
-package com.example.protenday.domain.constant;
+package com.example.potenday.domain.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.protenday.domain;
+package com.example.potenday.domain;
 
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -34,7 +34,7 @@ public class MessageEntity {
     @OneToOne @JoinColumn(name = "plant_id") private PlantEntity plant;
 
     /** 전달될 메시지 내용 */
-    @Column(nullable = false, columnDefinition = "TEXT") private String message;
+    @Column(columnDefinition = "TEXT") private String message;
 
     /** 전달될 숲의 아이디 */
     @Setter @ManyToOne @JoinColumn(name = "forest_id") private ForestEntity forestEntity;

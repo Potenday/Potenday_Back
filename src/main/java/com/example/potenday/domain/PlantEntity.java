@@ -1,6 +1,6 @@
-package com.example.protenday.domain;
+package com.example.potenday.domain;
 
-import com.example.protenday.domain.constant.DateTimeAuditing;
+import com.example.potenday.domain.constant.DateTimeAuditing;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
