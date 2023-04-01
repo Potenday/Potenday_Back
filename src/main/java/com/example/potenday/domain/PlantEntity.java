@@ -1,6 +1,7 @@
 package com.example.potenday.domain;
 
 import com.example.potenday.domain.constant.DateTimeAuditing;
+import com.example.potenday.dto.request.PlantRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,5 +48,11 @@ public class PlantEntity extends DateTimeAuditing {
     @Override
     public int hashCode() {
         return Objects.hash(this.getId());
+    }
+
+    public void updatePlant(PlantRequest request) {
+        this.name = Objects.equals(this.name, request.getName()) ? this.name : request.getName();
+        this.attribute = Objects.equals(this.attribute, request.getAttribute()) ? this.attribute : request.getAttribute();
+        this.description = Objects.equals(this.description, request.getDescription()) ? this.description : request.getDescription();
     }
 }
