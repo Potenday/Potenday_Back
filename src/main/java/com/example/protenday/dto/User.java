@@ -24,6 +24,20 @@ public class User {
     private String modifiedBy;
     private String forestUrl;
 
+    public static User fromEntity(UserEntity entity) {
+        return User.builder()
+                .email(entity.getEmail())
+                .password(entity.getPassword())
+                .roles(entity.getRoles())
+                .fullname(entity.getFullname())
+                .nickname(entity.getNickname())
+                .registeredAt(entity.getRegisteredAt())
+                .registeredBy(entity.getRegisteredBy())
+                .modifiedAt(entity.getModifiedAt())
+                .modifiedBy(entity.getModifiedBy())
+                .build();
+    }
+
     public static User fromEntity(UserEntity entity, String forestUrl) {
         return User.builder()
                 .email(entity.getEmail())

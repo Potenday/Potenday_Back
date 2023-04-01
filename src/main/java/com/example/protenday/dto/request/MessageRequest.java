@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ForestRequest {
-
+public class MessageRequest {
+    /** Receiver */
+    private Long forestId;
+    /** 전달할 나무 */
+    private Long treeId;
 }
