@@ -3,7 +3,7 @@ management.endpoints.web.exposure.include: "*"
 
 logging:
   level:
-    com.example.potenday: debug
+    com.example.protenday: debug
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
 
