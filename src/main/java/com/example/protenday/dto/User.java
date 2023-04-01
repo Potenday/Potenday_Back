@@ -1,5 +1,6 @@
 package com.example.protenday.dto;
 
+import com.example.protenday.domain.UserEntity;
 import com.example.protenday.domain.constant.Role;
 import lombok.*;
 
@@ -21,18 +22,20 @@ public class User {
     private String registeredBy;
     private LocalDateTime modifiedAt;
     private String modifiedBy;
+    private String forestUrl;
 
-    public static User from(String email, String password, Set<Role> roles, String fullname, String nickname, LocalDateTime registeredAt, String registeredBy, LocalDateTime modifiedAt, String modifiedBy) {
+    public static User fromEntity(UserEntity entity, String forestUrl) {
         return User.builder()
-                .email(email)
-                .password(password)
-                .roles(roles)
-                .fullname(fullname)
-                .nickname(nickname)
-                .registeredAt(registeredAt)
-                .registeredBy(registeredBy)
-                .modifiedAt(modifiedAt)
-                .modifiedBy(modifiedBy)
+                .email(entity.getEmail())
+                .password(entity.getPassword())
+                .roles(entity.getRoles())
+                .fullname(entity.getFullname())
+                .nickname(entity.getNickname())
+                .registeredAt(entity.getRegisteredAt())
+                .registeredBy(entity.getRegisteredBy())
+                .modifiedAt(entity.getModifiedAt())
+                .modifiedBy(entity.getModifiedBy())
+                .forestUrl(forestUrl)
                 .build();
     }
 }
