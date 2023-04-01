@@ -1,6 +1,6 @@
 package com.example.protenday.dto;
 
-import com.example.potenday.domain.PlantEntity;
+import com.example.protenday.domain.PlantEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
