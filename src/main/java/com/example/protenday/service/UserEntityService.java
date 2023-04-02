@@ -5,6 +5,7 @@ import com.example.protenday.domain.constant.Role;
 import com.example.protenday.dto.OAuthToken;
 import com.example.protenday.dto.TokenInfo;
 import com.example.protenday.dto.User;
+import com.example.protenday.dto.request.UserLogoutRequest;
 import com.example.protenday.dto.request.UserRequest;
 import com.example.protenday.dto.response.KakaoLoginResponseDto;
 import com.example.protenday.dto.response.UserResponse;
@@ -96,5 +97,9 @@ public class UserEntityService {
             userEntityRepository.findByEmail(email).map(User::fromEntity).orElseThrow(() ->
                 new PotendayApplicationException(ErrorCode.USER_NOT_FOUND))
         );
+    }
+
+    public void logout(String email) {
+        userEntityCacheRepository.deleteRefreshToken(email);
     }
 }

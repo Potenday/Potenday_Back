@@ -1,10 +1,14 @@
 package com.example.protenday.controller;
 
+import com.example.protenday.dto.request.UserLogoutRequest;
 import com.example.protenday.dto.request.UserRequest;
 import com.example.protenday.dto.response.Response;
 import com.example.protenday.dto.response.UserResponse;
 import com.example.protenday.service.UserEntityService;
+import com.nimbusds.openid.connect.sdk.LogoutRequest;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,6 +30,13 @@ public class UserController {
         UserResponse userResponse = userEntityService.login(code);
 
         return Response.success(userResponse);
+    }
+
+    @DeleteMapping("/logout")
+    public Response<Void> logout(Authentication authentication) {
+        userEntityService.logout(authentication.getName());
+
+        return Response.success();
     }
 
 }
