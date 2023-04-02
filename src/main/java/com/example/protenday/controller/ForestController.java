@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/forest")
+@RequestMapping("/api/forest")
 public class ForestController {
 
     private final ForestEntityService forestEntityService;
