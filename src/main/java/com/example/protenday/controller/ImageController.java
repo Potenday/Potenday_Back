@@ -21,7 +21,7 @@ public class ImageController {
 
     @GetMapping("/{id}")
     public void requestGetImage(@PathVariable Long id){
-        imageService.getImage(id);
+        imageService.searchImage(id);
     }
 
     @PutMapping("/{id}")
