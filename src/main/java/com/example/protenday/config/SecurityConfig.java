@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .mvcMatchers("/api/message/**").authenticated()
                         .antMatchers(HttpMethod.DELETE, "/api/users/logout").authenticated()
+                        .antMatchers(HttpMethod.PUT, "/api/users/reissue").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(withDefaults())

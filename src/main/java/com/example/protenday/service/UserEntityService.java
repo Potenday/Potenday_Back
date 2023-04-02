@@ -5,7 +5,6 @@ import com.example.protenday.domain.constant.Role;
 import com.example.protenday.dto.OAuthToken;
 import com.example.protenday.dto.TokenInfo;
 import com.example.protenday.dto.User;
-import com.example.protenday.dto.request.UserLogoutRequest;
 import com.example.protenday.dto.request.UserRequest;
 import com.example.protenday.dto.response.KakaoLoginResponseDto;
 import com.example.protenday.dto.response.UserResponse;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
 import java.util.Set;
@@ -101,5 +101,21 @@ public class UserEntityService {
 
     public void logout(String email) {
         userEntityCacheRepository.deleteRefreshToken(email);
+    }
+
+    public TokenInfo reissue(String accessToken, String refreshToken) {
+        String email = JwtTokenUtils.getEmail(accessToken, secretKey);
+        String refreshTokenFromRedis = userEntityCacheRepository.getRefreshToken(email);
+        User user = (User) loadUserByEmail(email);
+
+        if (ObjectUtils.isEmpty(refreshTokenFromRedis)) {
+            throw new PotendayApplicationException(ErrorCode.INVALID_TOKEN, "Invalid Access Token");
+        }
+
+        if (!refreshToken.equals(refreshTokenFromRedis.substring(1, refreshTokenFromRedis.length() - 1))) {
+            throw new PotendayApplicationException(ErrorCode.INVALID_PERMISSION, "Refresh Token is invalid.");
+        }
+
+        return JwtTokenUtils.reIssue(user, secretKey, refreshToken);
     }
 }
