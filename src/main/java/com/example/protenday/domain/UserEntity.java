@@ -26,7 +26,7 @@ public class UserEntity extends DateTimeAuditing {
     private Long id;
 
     /** UUID */
-    @Column(nullable = false, name = "uuid", unique = true) private Long uuid;
+    @Column(nullable = true, name = "uuid", unique = true) private Long uuid;
 
     /** 이메일 */
     @Column(nullable = false, name = "email", unique = true) private String email;

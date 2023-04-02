@@ -3,9 +3,12 @@ package com.example.protenday.service;
 import com.example.protenday.domain.ForestEntity;
 import com.example.protenday.domain.UserEntity;
 import com.example.protenday.dto.Forest;
+import com.example.protenday.exception.ErrorCode;
+import com.example.protenday.exception.PotendayApplicationException;
 import com.example.protenday.repository.ForestEntityRepository;
 import com.example.protenday.util.Base62Utils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -17,23 +20,16 @@ public class ForestEntityService {
 
     private final ForestEntityRepository forestEntityRepository;
     private final Base62Utils base62Utils;
-    private static final String FRONT_BASE_URL = "https://web-potenday-front-nx562olfxzmgcj.sel3.cloudtype.app/forest/";
+    @Value("${front-base-url}")
+    private String FRONT_BASE_URL;
 
     public Forest searchForest(String encodedId) {
         Long decodedId = base62Utils.decodeDirectionId(encodedId);
-        ForestEntity forestEntity = forestEntityRepository.findById(decodedId).orElse(null);
+        ForestEntity forestEntity = forestEntityRepository.findById(decodedId).orElseThrow(() ->
+                new PotendayApplicationException(ErrorCode.FOREST_NOT_FOUND)
+        );
 
-        if(!Objects.isNull(forestEntity)) {
-
-            // 에러 처리
-            return null;
-        }
-
-        Forest forest = Forest.fromEntity(forestEntity);
-
-        return forest;
-
-//        return UriComponentsBuilder.fromHttpUrl(FRONT_BASE_URL + encodedId).toUriString();
+        return Forest.fromEntity(forestEntity);
     }
 
     public String createForest(UserEntity userEntity) {

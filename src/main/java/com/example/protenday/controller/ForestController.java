@@ -16,11 +16,6 @@ public class ForestController {
 
     private final ForestEntityService forestEntityService;
 
-    @GetMapping("/test")
-    public Response<Void> test() {
-        return Response.success();
-    }
-
     @GetMapping("/{encodedId}")
     public Response<Void> searchForest(@PathVariable("encodedId") String encodedId) {
 

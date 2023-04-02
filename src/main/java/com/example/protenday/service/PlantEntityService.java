@@ -3,6 +3,8 @@ package com.example.protenday.service;
 import com.example.protenday.domain.ImageEntity;
 import com.example.protenday.domain.PlantEntity;
 import com.example.protenday.dto.request.PlantRequest;
+import com.example.protenday.exception.ErrorCode;
+import com.example.protenday.exception.PotendayApplicationException;
 import com.example.protenday.repository.ImageEntityRepository;
 import com.example.protenday.repository.PlantEntityRepository;
 import com.example.protenday.dto.Plant;
@@ -29,11 +31,11 @@ public class PlantEntityService {
      * @return
      */
     public Plant registerPlant(PlantRequest request) {
-        Optional<PlantEntity> plantEntity = plantEntityRepository.findByName(request.getName());
+        PlantEntity plantEntity = plantEntityRepository.findByName(request.getName()).get();
 
         if(!Objects.isNull(plantEntity)) {
             // 이미 존재하다는 에러 출력
-            return null;
+            throw new PotendayApplicationException(ErrorCode.DUPLICATE_PLANT);
         }
 
         ImageEntity imageEntity = imageEntityRepository.findById(request.getImageId()).get();

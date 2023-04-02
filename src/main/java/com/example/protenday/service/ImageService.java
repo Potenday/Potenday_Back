@@ -9,6 +9,7 @@ import com.example.protenday.util.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -21,11 +22,11 @@ public class ImageService {
     private final ImageEntityRepository imageEntityRepository;
     private final ImageCacheRepository imageCacheRepository;
 
-    public void saveImage(ImageRequest request) {
+    public void saveImage(MultipartFile image) {
         try {
             ImageEntity imageEntity = imageEntityRepository.save(ImageEntity.builder()
-                    .fileName(request.getImage().getOriginalFilename())
-                    .imageData(ImageUtils.compressImage(request.getImage().getBytes()))
+                    .fileName(image.getOriginalFilename())
+                    .imageData(ImageUtils.compressImage(image.getBytes()))
                     .build());
 
             imageCacheRepository.saveImage(Image.fromEntity(imageEntity));
@@ -35,16 +36,16 @@ public class ImageService {
         }
     }
 
-    public Image searchImage(Long id) {
-        Image image = imageCacheRepository.searchImage(id);
-        if(Objects.isNull(image) || Objects.isNull(image.getId())) {
-            ImageEntity imageEntity = imageEntityRepository.getReferenceById(id);
-            image = Image.fromEntity(imageEntity);
+    public  byte[] searchImage(Long id) {
+        byte[] source = imageCacheRepository.searchImage(id);
+
+        if(Objects.isNull(source)) {
+            ImageEntity imageEntity = imageEntityRepository.findById(id).get();
+            imageCacheRepository.saveImage(Image.fromEntity(imageEntity));
+            return ImageUtils.decompressImage(imageEntity.getImageData());
+        }else{
+            return ImageUtils.decompressImage(source);
         }
-
-        image.decompressImage();
-
-        return image;
     }
 
     public Image updateImage(Long id, ImageRequest request) {

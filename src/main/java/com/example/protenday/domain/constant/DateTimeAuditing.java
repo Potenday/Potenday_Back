@@ -19,21 +19,17 @@ import java.time.LocalDateTime;
 public abstract class DateTimeAuditing {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @CreatedDate
-    @Column(name = "registered_at", updatable = false)
+    @CreatedDate @Column(name = "registered_at", updatable = false)
     public LocalDateTime registeredAt;
 
-    @CreatedBy
-    @Column(name = "registered_by", updatable = false)
+    @CreatedBy @Column(name = "registered_by", updatable = false)
     public String registeredBy;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @LastModifiedDate
-    @Column(name = "modified_at")
+    @LastModifiedDate @Column(name = "modified_at")
     public LocalDateTime modifiedAt;
 
-    @LastModifiedBy
-    @Column(name = "modified_by")
+    @LastModifiedBy @Column(name = "modified_by")
     public String modifiedBy;
 
     @Column(name = "deleted_at")
