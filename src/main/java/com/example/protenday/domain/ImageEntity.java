@@ -40,8 +40,4 @@ public class ImageEntity extends DateTimeAuditing {
     public void updateImageSource(byte[] imageData) {
         this.imageData = imageData;
     }
-
-    public void decompressImage() {
-        this.imageData = ImageUtils.decompressImage(this.imageData);
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.protenday.dto;
 
 import com.example.protenday.domain.ImageEntity;
+import com.example.protenday.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,5 +22,9 @@ public class Image {
                 .filaname(entity.getFileName())
                 .imageData(entity.getImageData())
                 .build();
+    }
+
+    public void decompressImage() {
+        this.imageData = ImageUtils.decompressImage(this.imageData);
     }
 }

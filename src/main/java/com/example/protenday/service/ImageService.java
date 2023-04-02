@@ -3,6 +3,7 @@ package com.example.protenday.service;
 import com.example.protenday.domain.ImageEntity;
 import com.example.protenday.dto.Image;
 import com.example.protenday.dto.request.ImageRequest;
+import com.example.protenday.repository.cache.ImageCacheRepository;
 import com.example.protenday.repository.ImageEntityRepository;
 import com.example.protenday.util.ImageUtils;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,26 +19,32 @@ import java.io.IOException;
 public class ImageService {
 
     private final ImageEntityRepository imageEntityRepository;
+    private final ImageCacheRepository imageCacheRepository;
 
     public void saveImage(ImageRequest request) {
         try {
-            imageEntityRepository.save(ImageEntity.builder()
+            ImageEntity imageEntity = imageEntityRepository.save(ImageEntity.builder()
                     .fileName(request.getImage().getOriginalFilename())
                     .imageData(ImageUtils.compressImage(request.getImage().getBytes()))
                     .build());
-            // TODO: 캐시에도 저장
 
+            imageCacheRepository.saveImage(Image.fromEntity(imageEntity));
+            log.info("[ImageService save - success]");
         }catch (IOException e) {
-
+            log.error("[ImageService save - error] {}", e.getMessage());
         }
     }
 
-    public Image getImage(Long id) {
-        // TODO: 캐시를 통해 변경할 것
-        ImageEntity imageEntity = imageEntityRepository.getReferenceById(id);
-        imageEntity.decompressImage();
+    public Image searchImage(Long id) {
+        Image image = imageCacheRepository.searchImage(id);
+        if(Objects.isNull(image) || Objects.isNull(image.getId())) {
+            ImageEntity imageEntity = imageEntityRepository.getReferenceById(id);
+            image = Image.fromEntity(imageEntity);
+        }
 
-        return Image.fromEntity(imageEntity);
+        image.decompressImage();
+
+        return image;
     }
 
     public Image updateImage(Long id, ImageRequest request) {
