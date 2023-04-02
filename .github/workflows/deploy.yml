@@ -32,12 +32,18 @@ jobs:
                   secret : KAKAO_REDIRECT_URI
                 - name: KAKAO_REST_API_KEY
                   secret : KAKAO_REST_API_KEY
-                - name: LOCAL_DB_PASSWORD
-                  secret : LOCAL_DB_PASSWORD
-                - name: LOCAL_DB_URL
-                  secret : LOCAL_DB_URL
-                - name: LOCAL_DB_USERNAME
-                  secret : LOCAL_DB_USERNAME
+                - name: DB_PASSWORD
+                  secret : DB_PASSWORD
+                - name: DB_URL
+                  secret : DB_URL
+                - name: DB_USERNAME
+                  secret : DB_USERNAME
+                - name: REDIS_HOST
+                  secret : REDIS_HOST
+                - name: REDIS_PASSWORD
+                  secret : REDIS_PASSWORD
+                - name: REDIS_PORT
+                  secret : REDIS_PORT
               ports: 8080/http
             context:
               git:
