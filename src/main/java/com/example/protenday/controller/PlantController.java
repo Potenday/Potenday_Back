@@ -1,6 +1,7 @@
 package com.example.protenday.controller;
 
 import com.example.protenday.dto.request.PlantRequest;
+import com.example.protenday.dto.response.Response;
 import com.example.protenday.service.PlantEntityService;
 import com.example.protenday.dto.Plant;
 import lombok.RequiredArgsConstructor;
@@ -19,27 +20,33 @@ public class PlantController {
 
     // TODO: Response 통일
     @PostMapping
-    public void registerPlant(@RequestBody PlantRequest request) {
+    public Response<Void> registerPlant(@RequestBody PlantRequest request) {
         Plant plant = plantEntityService.registerPlant(request);
+        return Response.success();
     }
 
+    /** 전체 허용 */
     @GetMapping
-    public void requestPlants() {
+    public Response<Void> requestPlants() {
         List<Plant> plants = plantEntityService.requestPlants();
+        return Response.success();
     }
 
     @GetMapping("/{id}")
-    public void requestPlant(@PathVariable Long id) {
+    public Response<Void> requestPlant(@PathVariable Long id) {
         Plant plant = plantEntityService.requestPlant(id);
+        return Response.success();
     }
 
     @PutMapping("/{id}")
-    public void requestModifyPlant(@PathVariable Long id, @RequestBody PlantRequest request) {
+    public Response<Void> requestModifyPlant(@PathVariable Long id, @RequestBody PlantRequest request) {
         Plant plant = plantEntityService.requestModifyPlant(id, request);
+        return Response.success();
     }
 
     @DeleteMapping("/{id}")
-    public void requestRemovePlant(@PathVariable Long id) {
+    public Response<Void> requestRemovePlant(@PathVariable Long id) {
         plantEntityService.requestRemovePlant(id);
+        return Response.success();
     }
 }

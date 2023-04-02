@@ -1,6 +1,7 @@
 package com.example.protenday.controller;
 
 import com.example.protenday.dto.request.UserRequest;
+import com.example.protenday.dto.response.Response;
 import com.example.protenday.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,17 @@ public class UserController {
     private final UserEntityService userEntityService;
 
     @PostMapping("/sign-up")
-    public void registerUser(@RequestBody UserRequest request) {
+    public Response<Void> registerUser(@RequestBody UserRequest request) {
         userEntityService.registerUser(request);
+
+        return Response.success();
     }
 
     @GetMapping("/login")
-    public void login(@RequestParam("code") String code) {
+    public Response<Void> login(@RequestParam("code") String code) {
         userEntityService.login(code);
+
+        return Response.success();
     }
 
 }

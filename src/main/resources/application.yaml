@@ -33,6 +33,8 @@ kakao:
   redirect-uri: ${KAKAO_REDIRECT_URI}
   client-secret: ${KAKAO_CLIENT_SECRET}
 
+jwt.secret-key: ${JWT_SECRET_KEY}
+
 
 ---
 
