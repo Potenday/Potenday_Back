@@ -1,6 +1,7 @@
 package com.example.protenday.controller;
 
 import com.example.protenday.dto.Forest;
+import com.example.protenday.dto.response.ForestResponse;
 import com.example.protenday.dto.response.Response;
 import com.example.protenday.service.ForestEntityService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,10 @@ public class ForestController {
     private final ForestEntityService forestEntityService;
 
     @GetMapping("/{encodedId}")
-    public Response<Void> searchForest(@PathVariable("encodedId") String encodedId) {
+    public Response<ForestResponse> searchForest(@PathVariable("encodedId") String encodedId) {
 
         Forest forest = forestEntityService.searchForest(encodedId);
 
-        return Response.success();
+        return Response.success(ForestResponse.fromForest(forest));
     }
 }
