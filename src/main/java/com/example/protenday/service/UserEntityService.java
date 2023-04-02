@@ -68,4 +68,9 @@ public class UserEntityService {
         String forest = forestEntityService.createForest(newUser);
         User user = User.fromEntity(newUser, forest);
     }
+
+    public User loadUserByEmail(String email) {
+        UserEntity userEntity = userEntityRepository.findByEmail(email);
+        return User.fromEntity(userEntity);
+    }
 }

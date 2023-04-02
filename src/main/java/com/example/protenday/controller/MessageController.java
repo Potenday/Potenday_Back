@@ -1,6 +1,7 @@
 package com.example.protenday.controller;
 
 import com.example.protenday.dto.request.MessageRequest;
+import com.example.protenday.dto.response.Response;
 import com.example.protenday.service.MessageEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,17 @@ public class MessageController {
     private final MessageEntityService messageEntityService;
 
     @PostMapping
-    public void sendMessage(@RequestBody MessageRequest request) {
+    public Response<Void> sendMessage(@RequestBody MessageRequest request) {
         messageEntityService.sendMessage(request);
+
+        return Response.success();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMessage(@PathVariable Long id) {
+    public Response<Void> deleteMessage(@PathVariable Long id) {
         messageEntityService.deleteMessage(id);
+
+        return Response.success();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.protenday.controller;
 
 import com.example.protenday.dto.request.ImageRequest;
+import com.example.protenday.dto.response.Response;
 import com.example.protenday.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,17 +16,23 @@ public class ImageController {
     private final ImageService imageService;
 
     @PostMapping
-    public void requestSaveImage(@ModelAttribute ImageRequest request) {
+    public Response<Void> requestSaveImage(@ModelAttribute ImageRequest request) {
         imageService.saveImage(request);
+
+        return Response.success();
     }
 
     @GetMapping("/{id}")
-    public void requestGetImage(@PathVariable Long id){
+    public Response<Void> requestGetImage(@PathVariable Long id){
         imageService.searchImage(id);
+
+        return Response.success();
     }
 
     @PutMapping("/{id}")
-    public void updateImage(@PathVariable Long id, @ModelAttribute ImageRequest request) {
+    public Response<Void> updateImage(@PathVariable Long id, @ModelAttribute ImageRequest request) {
         imageService.updateImage(id, request);
+
+        return Response.success();
     }
 }
