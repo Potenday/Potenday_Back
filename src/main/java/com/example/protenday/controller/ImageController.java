@@ -15,6 +15,11 @@ public class ImageController {
 
     private final ImageService imageService;
 
+    @GetMapping("/test")
+    public Response<Void> test() {
+        return Response.success();
+    }
+
     @PostMapping
     public Response<Void> requestSaveImage(@ModelAttribute ImageRequest request) {
         imageService.saveImage(request);

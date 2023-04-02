@@ -13,6 +13,11 @@ public class UserController {
 
     private final UserEntityService userEntityService;
 
+    @GetMapping("/test")
+    public Response<Void> test() {
+        return Response.success();
+    }
+
     @PostMapping("/sign-up")
     public Response<Void> registerUser(@RequestBody UserRequest request) {
         userEntityService.registerUser(request);

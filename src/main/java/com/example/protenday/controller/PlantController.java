@@ -18,7 +18,11 @@ public class PlantController {
 
     private PlantEntityService plantEntityService;
 
-    // TODO: Response 통일
+    @GetMapping("/test")
+    public Response<Void> test() {
+        return Response.success();
+    }
+
     @PostMapping
     public Response<Void> registerPlant(@RequestBody PlantRequest request) {
         Plant plant = plantEntityService.registerPlant(request);

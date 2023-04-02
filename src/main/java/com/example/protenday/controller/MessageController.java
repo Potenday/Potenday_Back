@@ -13,6 +13,11 @@ public class MessageController {
 
     private final MessageEntityService messageEntityService;
 
+    @GetMapping("/test")
+    public Response<Void> test() {
+        return Response.success();
+    }
+
     @PostMapping
     public Response<Void> sendMessage(@RequestBody MessageRequest request) {
         messageEntityService.sendMessage(request);
