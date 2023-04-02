@@ -1,10 +1,6 @@
 package com.example.protenday.domain;
 
-import com.example.protenday.domain.constant.DateTimeAuditing;
-import com.example.protenday.util.ImageUtils;
 import lombok.*;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -13,10 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Table(name = "image")
-@SQLDelete(sql = "UPDATE image SET deleted_at = NOW() where id=?")
-@Where(clause = "deleted_at is NULL")
 @Entity
-public class ImageEntity extends DateTimeAuditing {
+public class ImageEntity {
 
     /** 인덱스 */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

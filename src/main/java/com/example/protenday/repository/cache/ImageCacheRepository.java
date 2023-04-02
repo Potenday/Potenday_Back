@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,7 @@ public class ImageCacheRepository {
     private static final String CACHE_KEY = "IMAGE";
 
     private final RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String, String, Object> hashOperations;
+    private ValueOperations<String, Object> valueOperations;
 
     @PostConstruct
     public void init() {
@@ -28,7 +29,7 @@ public class ImageCacheRepository {
 
     public void saveImage(Image image) {
         this.redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Image>(Image.class));
-        hashOperations = redisTemplate.opsForHash();
+        this.valueOperations = redisTemplate.opsForValue();
 
         if(Objects.isNull(image) || Objects.isNull(image.getId())) {
             log.error("Required subKey or value must not be null");
@@ -36,7 +37,7 @@ public class ImageCacheRepository {
         }
 
         try {
-            hashOperations.put(CACHE_KEY, image.getId().toString(), image);
+            this.valueOperations.set(CACHE_KEY + image.getId(), image.getImageData());
 
             log.info("[ImageCacheRepository save - success]");
         }catch (Exception e) {
@@ -44,12 +45,12 @@ public class ImageCacheRepository {
         }
     }
 
-    public Image searchImage(Long id) {
+    public byte[] searchImage(Long id) {
         this.redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Image>(Image.class));
-        hashOperations = redisTemplate.opsForHash();
+        this.valueOperations = redisTemplate.opsForValue();
 
         try {
-            Image image = (Image) hashOperations.get(CACHE_KEY, id.toString());
+            byte[] image = (byte[]) this.valueOperations.get(CACHE_KEY + id);
 
             log.info("[ImageCacheRepository searchImage - success]");
 

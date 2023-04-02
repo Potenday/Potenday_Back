@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,7 +46,7 @@ public class SecurityConfig {
                 .sessionManagement(h -> h.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(auth -> auth
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .mvcMatchers("/api/users/**").permitAll()
+                        .mvcMatchers("/api/message/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(withDefaults())
@@ -53,10 +54,5 @@ public class SecurityConfig {
                 .apply(new JwtSecurityConfig(key, userEntityService))
                 .and()
                 .build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }

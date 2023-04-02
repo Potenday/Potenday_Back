@@ -2,6 +2,7 @@ package com.example.protenday.controller;
 
 import com.example.protenday.dto.request.UserRequest;
 import com.example.protenday.dto.response.Response;
+import com.example.protenday.dto.response.UserResponse;
 import com.example.protenday.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,6 @@ public class UserController {
 
     private final UserEntityService userEntityService;
 
-    @GetMapping("/test")
-    public Response<Void> test() {
-        return Response.success();
-    }
-
     @PostMapping("/sign-up")
     public Response<Void> registerUser(@RequestBody UserRequest request) {
         userEntityService.registerUser(request);
@@ -26,10 +22,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public Response<Void> login(@RequestParam("code") String code) {
-        userEntityService.login(code);
+    public Response<UserResponse> login(@RequestParam("code") String code) {
+        UserResponse userResponse = userEntityService.login(code);
 
-        return Response.success();
+        return Response.success(userResponse);
     }
 
 }

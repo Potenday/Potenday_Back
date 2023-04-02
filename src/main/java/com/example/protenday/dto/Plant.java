@@ -17,6 +17,7 @@ public class Plant {
     private String name;
     private String attribute;
     private String description;
+    private Long imageId;
     private LocalDateTime registeredAt;
     private String registeredBy;
     private LocalDateTime modifiedAt;
@@ -25,6 +26,7 @@ public class Plant {
     public static Plant fromEntity(PlantEntity entity) {
         return Plant.builder()
                 .id(entity.getId())
+                .imageId(entity.getImageEntity().getId())
                 .name(entity.getName())
                 .attribute(entity.getAttribute())
                 .description(entity.getDescription())

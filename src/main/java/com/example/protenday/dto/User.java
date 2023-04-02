@@ -19,6 +19,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserDetails {
+    private Long id;
     private String email;
     private String password;
     private String fullname;
@@ -33,6 +34,7 @@ public class User implements UserDetails {
 
     public static User fromEntity(UserEntity entity) {
         return User.builder()
+                .id(entity.getId())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .fullname(entity.getFullname())
@@ -48,6 +50,7 @@ public class User implements UserDetails {
 
     public static User fromEntity(UserEntity entity, String forestUrl) {
         return User.builder()
+                .id(entity.getId())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .fullname(entity.getFullname())
