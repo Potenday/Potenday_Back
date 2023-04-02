@@ -10,7 +10,11 @@ import com.example.protenday.repository.MessageEntityRepository;
 import com.example.protenday.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,5 +44,14 @@ public class MessageEntityService {
 
     public void deleteMessage(Long id) {
         messageEntityRepository.deleteById(id);
+    }
+
+    public List<Message> searchMessageList() {
+        return messageEntityRepository.findAll(Sort.by(Sort.Direction.DESC, "registered_at")).stream().map(Message::fromEntity).collect(Collectors.toList());
+    }
+
+    public Message searchMessage(Long id) {
+        MessageEntity messageEntity = messageEntityRepository.findById(id).get();
+        return Message.fromEntity(messageEntity);
     }
 }

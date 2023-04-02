@@ -46,6 +46,8 @@ jobs:
                   secret : REDIS_PORT
                 - name: JWT_SECRET_KEY
                   secret : JWT_SECRET_KEY
+                - name: FRONT_BASE_URL
+                  secret : FRONT_BASE_URL
               ports: 8080/http
             context:
               git:

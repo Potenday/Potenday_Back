@@ -37,7 +37,7 @@ public class ForestEntityService {
 
         String encodedId = base62Utils.encodeDirectionId(forestEntity.getId());
 
-        return UriComponentsBuilder.fromHttpUrl(FRONT_BASE_URL + encodedId).toUriString();
+        return UriComponentsBuilder.fromHttpUrl(FRONT_BASE_URL + "forest/" + encodedId).toUriString();
     }
 
     public String getMyForest(UserEntity userEntity) {
@@ -46,5 +46,9 @@ public class ForestEntityService {
         String encodedId = base62Utils.encodeDirectionId(forestEntity.getId());
 
         return UriComponentsBuilder.fromHttpUrl(FRONT_BASE_URL + encodedId).toUriString();
+    }
+
+    public String convertURL(String encodedId) {
+        return UriComponentsBuilder.fromHttpUrl(FRONT_BASE_URL + "forest/" + encodedId).toUriString();
     }
 }
