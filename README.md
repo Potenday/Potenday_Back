@@ -6,8 +6,6 @@
 
 ## 개발 환경
 
-<hr />
-
 - Intellij IDEA Ultimate 2023.1.3
 - Java 17
 - Gradle 7.6.1
@@ -15,8 +13,6 @@
 
 
 ## 기술 스택
-
-<hr />
 
 - Spring Web
 - Spring Data JPA
